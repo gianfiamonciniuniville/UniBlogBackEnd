@@ -1,0 +1,6 @@
+@UniBlog.WebApi_HostAddress = http://localhost:5167
+
+GET {{UniBlog.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
