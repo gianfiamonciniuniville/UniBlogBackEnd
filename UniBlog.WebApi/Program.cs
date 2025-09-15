@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using UniBlog.Domain.Interfaces;
 using UniBlog.Infrastructure;
+using UniBlog.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+
 builder.Services.AddDbContextPool<UniBlogDbContext>(b =>
 {
     var connectionString = builder.Environment.IsDevelopment()
@@ -18,7 +22,6 @@ builder.Services.AddDbContextPool<UniBlogDbContext>(b =>
     b.UseSqlServer(connectionString);
     // b.AddInterceptors(new Commands());
 });
-
 
 var app = builder.Build();
 
