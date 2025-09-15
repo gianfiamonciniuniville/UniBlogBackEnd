@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using UniBlog.Domain.Interfaces;
 using UniBlog.Infrastructure;
 using UniBlog.Infrastructure.Repositories;
+using UniBlog.WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ builder.Services.AddDbContextPool<UniBlogDbContext>(b =>
         ? builder.Configuration.GetConnectionString("DefaultConnection")
         : builder.Configuration.GetConnectionString("DefaultDockerConnection");
     b.UseSqlServer(connectionString);
-    // b.AddInterceptors(new Commands());
+    b.AddInterceptors(new CommandsInterceptor());
 });
 
 var app = builder.Build();
