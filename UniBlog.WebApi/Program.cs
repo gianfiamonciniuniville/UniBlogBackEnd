@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using UniBlog.Application.Interfaces;
+using UniBlog.Application.Services;
 using UniBlog.Domain.Interfaces;
 using UniBlog.Infrastructure;
 using UniBlog.Infrastructure.Repositories;
@@ -14,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IPostService, PostSerivce>();
 
 builder.Services.AddDbContextPool<UniBlogDbContext>(b =>
 {
