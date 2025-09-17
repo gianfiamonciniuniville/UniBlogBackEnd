@@ -8,4 +8,5 @@ public sealed class User: Entity
     public string? ProfileImageUrl { get; set; }
     public string? Bio { get; set; }
     public string Role { get; set; } // Role Enum
+    public IEnumerable<Blog> Blogs { get; set; }
 }
