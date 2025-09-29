@@ -9,4 +9,6 @@ public sealed class User: Entity
     public string? Bio { get; set; }
     public string Role { get; set; } // Role Enum
     public IEnumerable<Blog> Blogs { get; set; }
+    public IEnumerable<Comment> Comments { get; set; }
+    public IEnumerable<Like> Likes { get; set; }
 }

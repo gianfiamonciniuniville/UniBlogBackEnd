@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniBlog.Infrastructure;
 
@@ -11,9 +12,11 @@ using UniBlog.Infrastructure;
 namespace UniBlog.Infrastructure.Migrations
 {
     [DbContext(typeof(UniBlogDbContext))]
-    partial class UniBlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250929154407_LikeCommentUserConfig")]
+    partial class LikeCommentUserConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -8,4 +8,6 @@ public sealed class Post: Entity
     public string Content { get; set; }
     public string Status { get; set; } // PostStatus Enum
     public int ViewCount { get; set; }
+    public IEnumerable<Comment> Comments { get; set; }
+    public IEnumerable<Like> Likes { get; set; }
 }
