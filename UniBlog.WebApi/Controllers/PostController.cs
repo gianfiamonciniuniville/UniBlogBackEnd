@@ -8,7 +8,7 @@ namespace UniBlog.WebApi.Controllers;
 [Route("[controller]")]
 public class PostController(IPostService postService): ControllerBase
 {
-    [HttpGet]
+    [HttpGet("all")]
     public IActionResult ListAllPosts()
     {
         try
@@ -46,6 +46,7 @@ public class PostController(IPostService postService): ControllerBase
             {
                 return NotFound();
             }
+
             return Ok(editedPost);
         }
         catch (Exception ex)

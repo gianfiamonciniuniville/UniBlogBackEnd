@@ -35,7 +35,7 @@ public class PostService(IPostRepository postRepository): IPostService
         var existingPost = postRepository.GetByIdAsync(id)
             ?? throw new Exception("Post not found");
 
-        existingPost.Published = true;
+        existingPost.Published = !existingPost.Published;
         existingPost.PublishedAt = DateTime.UtcNow;
 
         return postRepository.Update(existingPost);
