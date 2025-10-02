@@ -19,9 +19,9 @@ public class PostService(IPostRepository postRepository) : IPostService
             Published = p.Published,
             PublishedAt = p.PublishedAt,
             ViewCount = p.ViewCount,
-            Author = new UserShortDto { Id = p.Author.Id, UserName = p.Author.UserName, ProfileImageUrl = p.Author.ProfileImageUrl },
-            Comments = p.Comments?.Select(c => new CommentDto { Id = c.Id, Content = c.Content, User = new UserShortDto { Id = c.User.Id, UserName = c.User.UserName, ProfileImageUrl = c.User.ProfileImageUrl } }) ?? new List<CommentDto>(),
-            Likes = p.Likes?.Select(l => new LikeDto { Id = l.Id, User = new UserShortDto { Id = l.User.Id, UserName = l.User.UserName, ProfileImageUrl = l.User.ProfileImageUrl } }) ?? new List<LikeDto>()
+            Author = p.Author != null ? new UserShortDto { Id = p.Author.Id, UserName = p.Author.UserName, ProfileImageUrl = p.Author.ProfileImageUrl } : null,
+            Comments = p.Comments?.Select(c => new CommentDto { Id = c.Id, Content = c.Content, User = c.User != null ? new UserShortDto { Id = c.User.Id, UserName = c.User.UserName, ProfileImageUrl = c.User.ProfileImageUrl } : null }) ?? new List<CommentDto>(),
+            Likes = p.Likes?.Select(l => new LikeDto { Id = l.Id, User = l.User != null ? new UserShortDto { Id = l.User.Id, UserName = l.User.UserName, ProfileImageUrl = l.User.ProfileImageUrl } : null }) ?? new List<LikeDto>()
         });
     }
 
@@ -37,7 +37,7 @@ public class PostService(IPostRepository postRepository) : IPostService
         };
 
         var createdPost = await postRepository.CreateAsync(post);
-        return await GetBySlug(createdPost.Slug);
+        return await GetBySlug(createdPost.Slug) ?? throw new Exception("Post not found after creation.");
     }
 
     public async Task<PostDto> EditPost(int id, PostUpdateDto postDto)
@@ -50,7 +50,7 @@ public class PostService(IPostRepository postRepository) : IPostService
         existingPost.Slug = postDto.Slug;
 
         var updatedPost = await postRepository.UpdateAsync(existingPost);
-        return await GetBySlug(updatedPost.Slug);
+        return await GetBySlug(updatedPost.Slug) ?? throw new Exception("Post not found after edit.");
     }
 
     public async Task<PostDto> PublishPost(int id)
@@ -62,7 +62,7 @@ public class PostService(IPostRepository postRepository) : IPostService
         existingPost.PublishedAt = DateTime.UtcNow;
 
         var updatedPost = await postRepository.UpdateAsync(existingPost);
-        return await GetBySlug(updatedPost.Slug);
+        return await GetBySlug(updatedPost.Slug) ?? throw new Exception("Post not found after publish.");
     }
 
     public async Task<PostDto?> GetBySlug(string slug)
@@ -79,9 +79,9 @@ public class PostService(IPostRepository postRepository) : IPostService
             Published = p.Published,
             PublishedAt = p.PublishedAt,
             ViewCount = p.ViewCount,
-            Author = new UserShortDto { Id = p.Author.Id, UserName = p.Author.UserName, ProfileImageUrl = p.Author.ProfileImageUrl },
-            Comments = p.Comments?.Select(c => new CommentDto { Id = c.Id, Content = c.Content, User = new UserShortDto { Id = c.User.Id, UserName = c.User.UserName, ProfileImageUrl = c.User.ProfileImageUrl } }) ?? new List<CommentDto>(),
-            Likes = p.Likes?.Select(l => new LikeDto { Id = l.Id, User = new UserShortDto { Id = l.Id, UserName = l.User.UserName, ProfileImageUrl = l.User.ProfileImageUrl } }) ?? new List<LikeDto>()
+            Author = p.Author != null ? new UserShortDto { Id = p.Author.Id, UserName = p.Author.UserName, ProfileImageUrl = p.Author.ProfileImageUrl } : null,
+            Comments = p.Comments?.Select(c => new CommentDto { Id = c.Id, Content = c.Content, User = c.User != null ? new UserShortDto { Id = c.User.Id, UserName = c.User.UserName, ProfileImageUrl = c.User.ProfileImageUrl } : null }) ?? new List<CommentDto>(),
+            Likes = p.Likes?.Select(l => new LikeDto { Id = l.Id, User = l.User != null ? new UserShortDto { Id = l.User.Id, UserName = l.User.UserName, ProfileImageUrl = l.User.ProfileImageUrl } : null }) ?? new List<LikeDto>()
         };
     }
 
@@ -97,9 +97,9 @@ public class PostService(IPostRepository postRepository) : IPostService
             Published = p.Published,
             PublishedAt = p.PublishedAt,
             ViewCount = p.ViewCount,
-            Author = new UserShortDto { Id = p.Author.Id, UserName = p.Author.UserName, ProfileImageUrl = p.Author.ProfileImageUrl },
-            Comments = p.Comments?.Select(c => new CommentDto { Id = c.Id, Content = c.Content, User = new UserShortDto { Id = c.User.Id, UserName = c.User.UserName, ProfileImageUrl = c.User.ProfileImageUrl } }) ?? new List<CommentDto>(),
-            Likes = p.Likes?.Select(l => new LikeDto { Id = l.Id, User = new UserShortDto { Id = l.User.Id, UserName = l.User.UserName, ProfileImageUrl = l.User.ProfileImageUrl } }) ?? new List<LikeDto>()
+            Author = p.Author != null ? new UserShortDto { Id = p.Author.Id, UserName = p.Author.UserName, ProfileImageUrl = p.Author.ProfileImageUrl } : null,
+            Comments = p.Comments?.Select(c => new CommentDto { Id = c.Id, Content = c.Content, User = c.User != null ? new UserShortDto { Id = c.User.Id, UserName = c.User.UserName, ProfileImageUrl = c.User.ProfileImageUrl } : null }) ?? new List<CommentDto>(),
+            Likes = p.Likes?.Select(l => new LikeDto { Id = l.Id, User = l.User != null ? new UserShortDto { Id = l.User.Id, UserName = l.User.UserName, ProfileImageUrl = l.User.ProfileImageUrl } : null }) ?? new List<LikeDto>()
         });
     }
 }

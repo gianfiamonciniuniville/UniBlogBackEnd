@@ -10,6 +10,10 @@ public class PostRepository(UniBlogDbContext context) : Repository<Post>(context
     {
         return await context.Posts
             .Include(p => p.Author)
+            .Include(p => p.Comments)
+            .ThenInclude(c => c.User)
+            .Include(p => p.Likes)
+            .ThenInclude(l => l.User)
             .ToListAsync();
     }
 

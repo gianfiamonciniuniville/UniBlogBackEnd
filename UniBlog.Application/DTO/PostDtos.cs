@@ -17,19 +17,6 @@ public class PostDto
     public IEnumerable<LikeDto> Likes { get; set; } = new List<LikeDto>();
 }
 
-public class CommentDto
-{
-    public int Id { get; set; }
-    public string Content { get; set; } = string.Empty;
-    public UserShortDto? User { get; set; }
-}
-
-public class LikeDto
-{
-    public int Id { get; set; }
-    public UserShortDto? User { get; set; }
-}
-
 public class PostCreateDto
 {
     public string Title { get; set; } = string.Empty;

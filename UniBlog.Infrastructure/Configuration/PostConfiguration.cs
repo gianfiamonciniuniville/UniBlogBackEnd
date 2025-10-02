@@ -4,7 +4,7 @@ using UniBlog.Domain.Entities;
 
 namespace UniBlog.Infrastructure.Configuration;
 
-internal class PostConfiguration: IEntityTypeConfiguration<Post>
+public class PostConfiguration: IEntityTypeConfiguration<Post>
 {
     public void Configure(EntityTypeBuilder<Post> builder)
     {
@@ -16,6 +16,9 @@ internal class PostConfiguration: IEntityTypeConfiguration<Post>
         builder.Property(b => b.Slug).IsRequired();
         builder.HasOne(b => b.Blog).WithMany(b => b.Posts).HasForeignKey(b => b.BlogId);
         builder.HasOne(p => p.Author).WithMany().HasForeignKey(p => p.AuthorId).OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(p => p.Comments).WithOne(c => c.Post).HasForeignKey(c => c.PostId);
+        builder.HasMany(p => p.Likes).WithOne(l => l.Post).HasForeignKey(l => l.PostId);
 
 
         builder.HasData([
