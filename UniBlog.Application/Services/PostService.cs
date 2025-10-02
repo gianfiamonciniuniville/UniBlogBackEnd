@@ -4,7 +4,7 @@ using UniBlog.Domain.Interfaces;
 
 namespace UniBlog.Application.Services;
 
-public class PostSerivce(IPostRepository postRepository): IPostService
+public class PostService(IPostRepository postRepository): IPostService
 {
     public IEnumerable<Post> ListAll()
     {
