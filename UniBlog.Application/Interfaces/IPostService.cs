@@ -1,13 +1,13 @@
-using UniBlog.Domain.Entities;
+using UniBlog.Application.DTO;
 
 namespace UniBlog.Application.Interfaces;
 
 public interface IPostService
 {
-    public IEnumerable<Post> ListAll();
-    public Post CreatePost(Post post);
-    public Post EditPost(int id, Post post);
-    public Post PublishPost(int id);
-    public Post? GetBySlug(string slug);
-    public IEnumerable<Post> GetByAuthor(int authorId);
+    Task<IEnumerable<PostDto>> ListAll();
+    Task<PostDto> CreatePost(PostCreateDto post);
+    Task<PostDto> EditPost(int id, PostUpdateDto post);
+    Task<PostDto> PublishPost(int id);
+    Task<PostDto?> GetBySlug(string slug);
+    Task<IEnumerable<PostDto>> GetByAuthor(int authorId);
 }

@@ -1,42 +1,53 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using UniBlog.Domain.Entities;
 using UniBlog.Domain.Interfaces;
 
 namespace UniBlog.Infrastructure.Repositories;
 
-public class PostRepository(UniBlogDbContext context): Repository<Post>(context), IPostRepository
+public class PostRepository(UniBlogDbContext context) : Repository<Post>(context), IPostRepository
 {
-    public IEnumerable<Post> ListAllPosts()
+    public async Task<IEnumerable<Post>> GetAllWithDetailsAsync()
     {
-        return context.Posts.AsEnumerable();
-    }
-    
-    public Post? GetByIdAsync(int id)
-    {
-        return context.Posts.FindAsync(id).GetAwaiter().GetResult();
+        return await context.Posts
+            .Include(p => p.Author)
+            .ToListAsync();
     }
 
-    public Post? GetBySlug(string slug)
+    public async Task<Post?> GetByIdAsync(int id)
     {
-        return context.Posts.FirstOrDefaultAsync(p => p.Slug == slug).GetAwaiter().GetResult();
+        return await context.Posts.FindAsync(id);
     }
 
-    public IEnumerable<Post> GetByAuthor(int authorId)
+    public async Task<Post?> GetBySlugWithDetailsAsync(string slug)
     {
-        return context.Posts.Where(p => p.AuthorId == authorId).AsEnumerable();
+        return await context.Posts
+            .Include(p => p.Author)
+            .Include(p => p.Comments)
+            .ThenInclude(c => c.User)
+            .Include(p => p.Likes)
+            .ThenInclude(l => l.User)
+            .FirstOrDefaultAsync(p => p.Slug == slug);
     }
-    
-    public new Post Update(Post post)
+
+    public async Task<IEnumerable<Post>> GetByAuthorWithDetailsAsync(int authorId)
     {
-        var enty = context.Posts.Update(post);
-        context.SaveChanges();
-        return enty.Entity;
+        return await context.Posts
+            .Where(p => p.AuthorId == authorId)
+            .Include(p => p.Author)
+            .ToListAsync();
     }
-    
-    public new Post Create(Post post)
+
+    public async Task<Post> UpdateAsync(Post post)
     {
-        var enty = context.Posts.Add(post);
-        context.SaveChanges();
-        return enty.Entity;
+        var entry = context.Posts.Update(post);
+        await context.SaveChangesAsync();
+        return entry.Entity;
+    }
+
+    public async Task<Post> CreateAsync(Post post)
+    {
+        var entry = context.Posts.Add(post);
+        await context.SaveChangesAsync();
+        return entry.Entity;
     }
 }

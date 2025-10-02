@@ -1,53 +1,105 @@
+using UniBlog.Application.DTO;
 using UniBlog.Application.Interfaces;
 using UniBlog.Domain.Entities;
 using UniBlog.Domain.Interfaces;
 
 namespace UniBlog.Application.Services;
 
-public class PostService(IPostRepository postRepository): IPostService
+public class PostService(IPostRepository postRepository) : IPostService
 {
-    public IEnumerable<Post> ListAll()
+    public async Task<IEnumerable<PostDto>> ListAll()
     {
-        return postRepository.ListAllPosts();
+        var posts = await postRepository.GetAllWithDetailsAsync();
+        return posts.Select(p => new PostDto
+        {
+            Id = p.Id,
+            Title = p.Title,
+            Content = p.Content,
+            Slug = p.Slug,
+            Published = p.Published,
+            PublishedAt = p.PublishedAt,
+            ViewCount = p.ViewCount,
+            Author = new UserShortDto { Id = p.Author.Id, UserName = p.Author.UserName, ProfileImageUrl = p.Author.ProfileImageUrl },
+            Comments = p.Comments?.Select(c => new CommentDto { Id = c.Id, Content = c.Content, User = new UserShortDto { Id = c.User.Id, UserName = c.User.UserName, ProfileImageUrl = c.User.ProfileImageUrl } }) ?? new List<CommentDto>(),
+            Likes = p.Likes?.Select(l => new LikeDto { Id = l.Id, User = new UserShortDto { Id = l.User.Id, UserName = l.User.UserName, ProfileImageUrl = l.User.ProfileImageUrl } }) ?? new List<LikeDto>()
+        });
     }
 
-    public Post CreatePost(Post post)
+    public async Task<PostDto> CreatePost(PostCreateDto postDto)
     {
-        // TODO: Add validation
-        return postRepository.Create(post);
+        var post = new Post
+        {
+            Title = postDto.Title,
+            Content = postDto.Content,
+            Slug = postDto.Slug,
+            AuthorId = postDto.AuthorId,
+            BlogId = postDto.BlogId
+        };
+
+        var createdPost = await postRepository.CreateAsync(post);
+        return await GetBySlug(createdPost.Slug);
     }
 
-    public Post EditPost(int id, Post post)
+    public async Task<PostDto> EditPost(int id, PostUpdateDto postDto)
     {
-        // TODO: Add validation
-        var existingPost = postRepository.GetByIdAsync(id)
+        var existingPost = await postRepository.GetByIdAsync(id)
             ?? throw new Exception("Post not found");
-        
-        existingPost.Title = post.Title;
-        existingPost.Content = post.Content;
-        existingPost.Slug = post.Slug;
-        
-        return postRepository.Update(existingPost);
+
+        existingPost.Title = postDto.Title;
+        existingPost.Content = postDto.Content;
+        existingPost.Slug = postDto.Slug;
+
+        var updatedPost = await postRepository.UpdateAsync(existingPost);
+        return await GetBySlug(updatedPost.Slug);
     }
 
-    public Post PublishPost(int id)
+    public async Task<PostDto> PublishPost(int id)
     {
-        var existingPost = postRepository.GetByIdAsync(id)
+        var existingPost = await postRepository.GetByIdAsync(id)
             ?? throw new Exception("Post not found");
 
         existingPost.Published = !existingPost.Published;
         existingPost.PublishedAt = DateTime.UtcNow;
 
-        return postRepository.Update(existingPost);
+        var updatedPost = await postRepository.UpdateAsync(existingPost);
+        return await GetBySlug(updatedPost.Slug);
     }
 
-    public Post? GetBySlug(string slug)
+    public async Task<PostDto?> GetBySlug(string slug)
     {
-        return postRepository.GetBySlug(slug);
+        var p = await postRepository.GetBySlugWithDetailsAsync(slug);
+        if (p == null) return null;
+
+        return new PostDto
+        {
+            Id = p.Id,
+            Title = p.Title,
+            Content = p.Content,
+            Slug = p.Slug,
+            Published = p.Published,
+            PublishedAt = p.PublishedAt,
+            ViewCount = p.ViewCount,
+            Author = new UserShortDto { Id = p.Author.Id, UserName = p.Author.UserName, ProfileImageUrl = p.Author.ProfileImageUrl },
+            Comments = p.Comments?.Select(c => new CommentDto { Id = c.Id, Content = c.Content, User = new UserShortDto { Id = c.User.Id, UserName = c.User.UserName, ProfileImageUrl = c.User.ProfileImageUrl } }) ?? new List<CommentDto>(),
+            Likes = p.Likes?.Select(l => new LikeDto { Id = l.Id, User = new UserShortDto { Id = l.Id, UserName = l.User.UserName, ProfileImageUrl = l.User.ProfileImageUrl } }) ?? new List<LikeDto>()
+        };
     }
 
-    public IEnumerable<Post> GetByAuthor(int authorId)
+    public async Task<IEnumerable<PostDto>> GetByAuthor(int authorId)
     {
-        return postRepository.GetByAuthor(authorId);
+        var posts = await postRepository.GetByAuthorWithDetailsAsync(authorId);
+        return posts.Select(p => new PostDto
+        {
+            Id = p.Id,
+            Title = p.Title,
+            Content = p.Content,
+            Slug = p.Slug,
+            Published = p.Published,
+            PublishedAt = p.PublishedAt,
+            ViewCount = p.ViewCount,
+            Author = new UserShortDto { Id = p.Author.Id, UserName = p.Author.UserName, ProfileImageUrl = p.Author.ProfileImageUrl },
+            Comments = p.Comments?.Select(c => new CommentDto { Id = c.Id, Content = c.Content, User = new UserShortDto { Id = c.User.Id, UserName = c.User.UserName, ProfileImageUrl = c.User.ProfileImageUrl } }) ?? new List<CommentDto>(),
+            Likes = p.Likes?.Select(l => new LikeDto { Id = l.Id, User = new UserShortDto { Id = l.User.Id, UserName = l.User.UserName, ProfileImageUrl = l.User.ProfileImageUrl } }) ?? new List<LikeDto>()
+        });
     }
 }

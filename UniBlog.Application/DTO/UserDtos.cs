@@ -15,21 +15,21 @@ public class UserDto(User user)
 public class UserShortDto
 {
     public int Id { get; set; }
-    public string UserName { get; set; }
+    public string UserName { get; set; } = string.Empty;
     public string? ProfileImageUrl { get; set; }
 }
 
 public class RegisterUserDto
 {
-    public string UserName { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
+    public string UserName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 }
 
 public class LoginUserDto
 {
-    public string Email { get; set; }
-    public string Password { get; set; }
+    public string Email { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 }
 
 public class UpdateUserProfileDto
@@ -40,8 +40,8 @@ public class UpdateUserProfileDto
 
 public class ChangeUserPasswordDto
 {
-    public string OldPassword { get; set; }
-    public string NewPassword { get; set; }
+    public string OldPassword { get; set; } = string.Empty;
+    public string NewPassword { get; set; } = string.Empty;
 }
 
 public class AuthResponseDto(string token, UserDto user)
