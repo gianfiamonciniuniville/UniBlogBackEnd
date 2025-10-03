@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using UniBlog.Application.DTO;
 using UniBlog.Application.Interfaces;
 
@@ -9,6 +10,8 @@ namespace UniBlog.WebApi.Controllers;
 public class PostController(IPostService postService) : ControllerBase
 {
     [HttpGet("all")]
+    [EndpointSummary("Lista todas as publicações")]
+    [EndpointDescription("Obtém uma lista de todas as publicações cadastradas no sistema.")]
     public async Task<IActionResult> ListAllPosts()
     {
         try
@@ -23,6 +26,8 @@ public class PostController(IPostService postService) : ControllerBase
     }
 
     [HttpPost]
+    [EndpointSummary("Cria uma nova publicação")]
+    [EndpointDescription("Cria uma nova publicação com os dados fornecidos.")]
     public async Task<IActionResult> CreatePost([FromBody] PostCreateDto post)
     {
         try
@@ -37,6 +42,8 @@ public class PostController(IPostService postService) : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [EndpointSummary("Edita uma publicação existente")]
+    [EndpointDescription("Edita os dados de uma publicação existente a partir do seu ID.")]
     public async Task<IActionResult> EditPost(int id, [FromBody] PostUpdateDto post)
     {
         try
@@ -56,6 +63,8 @@ public class PostController(IPostService postService) : ControllerBase
     }
 
     [HttpPost("{id}/publish")]
+    [EndpointSummary("Publica uma publicação")]
+    [EndpointDescription("Torna uma publicação visível para o público.")]
     public async Task<IActionResult> PublishPost(int id)
     {
         try
@@ -74,6 +83,8 @@ public class PostController(IPostService postService) : ControllerBase
     }
 
     [HttpGet("slug/{slug}")]
+    [EndpointSummary("Obtém uma publicação pelo slug")]
+    [EndpointDescription("Obtém os detalhes de uma publicação específica pelo seu slug.")]
     public async Task<IActionResult> GetBySlug(string slug)
     {
         try
@@ -92,6 +103,8 @@ public class PostController(IPostService postService) : ControllerBase
     }
 
     [HttpGet("author/{authorId}")]
+    [EndpointSummary("Obtém publicações por autor")]
+    [EndpointDescription("Obtém uma lista de publicações de um autor específico.")]
     public async Task<IActionResult> GetByAuthor(int authorId)
     {
         try

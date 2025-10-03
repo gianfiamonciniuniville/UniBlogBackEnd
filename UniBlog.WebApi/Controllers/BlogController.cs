@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using UniBlog.Application.DTO;
 using UniBlog.Application.Interfaces;
 
@@ -9,6 +10,8 @@ namespace UniBlog.WebApi.Controllers;
 public class BlogController(IBlogService blogService) : ControllerBase
 {
     [HttpGet("all")]
+    [EndpointSummary("Obtém todos os blogs")]
+    [EndpointDescription("Obtém a lista de todos os blogs cadastrados no sistema.")]
     public async Task<IActionResult> GetAll()
     {
         try
@@ -23,6 +26,8 @@ public class BlogController(IBlogService blogService) : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [EndpointSummary("Obtém um blog pelo ID")]
+    [EndpointDescription("Obtém os detalhes de um blog específico pelo seu ID.")]
     public async Task<IActionResult> GetById(int id)
     {
         try
@@ -41,6 +46,8 @@ public class BlogController(IBlogService blogService) : ControllerBase
     }
 
     [HttpPost]
+    [EndpointSummary("Cria um novo blog")]
+    [EndpointDescription("Cria um novo blog com os dados fornecidos.")]
     public async Task<IActionResult> Create([FromBody] BlogCreateDto blog)
     {
         try
@@ -55,6 +62,8 @@ public class BlogController(IBlogService blogService) : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [EndpointSummary("Atualiza um blog existente")]
+    [EndpointDescription("Atualiza os dados de um blog existente a partir do seu ID.")]
     public async Task<IActionResult> Update(int id, [FromBody] BlogUpdateDto blog)
     {
         try
@@ -73,6 +82,8 @@ public class BlogController(IBlogService blogService) : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [EndpointSummary("Exclui um blog")]
+    [EndpointDescription("Exclui um blog do sistema a partir do seu ID.")]
     public async Task<IActionResult> Delete(int id)
     {
         try

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace UniBlog.WebApi.Controllers;
 
@@ -7,6 +8,8 @@ namespace UniBlog.WebApi.Controllers;
 public class TestController : ControllerBase
 {
     [HttpGet]
+    [EndpointSummary("Endpoint de teste")]
+    [EndpointDescription("Retorna uma mensagem de sucesso para testar a API.")]
     public IActionResult Get()
     {
         try

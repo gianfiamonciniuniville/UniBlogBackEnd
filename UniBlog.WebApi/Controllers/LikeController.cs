@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using UniBlog.Application.DTO;
 using UniBlog.Application.Interfaces;
 
@@ -9,6 +10,8 @@ namespace UniBlog.WebApi.Controllers;
 public class LikeController(ILikeService likeService) : ControllerBase
 {
     [HttpPost]
+    [EndpointSummary("Cria um novo like")]
+    [EndpointDescription("Cria um novo like em uma publicação.")]
     public async Task<IActionResult> Create([FromBody] LikeCreateDto like)
     {
         try
@@ -23,6 +26,8 @@ public class LikeController(ILikeService likeService) : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [EndpointSummary("Remove um like")]
+    [EndpointDescription("Remove um like de uma publicação a partir do seu ID.")]
     public async Task<IActionResult> Delete(int id)
     {
         try

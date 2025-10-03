@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using UniBlog.Application.DTO;
 using UniBlog.Application.Interfaces;
 
@@ -11,6 +12,8 @@ public class UserController(IUserService userService) : ControllerBase
     private readonly IUserService _userService = userService;
 
     [HttpPost("register")]
+    [EndpointSummary("Registra um novo usuário")]
+    [EndpointDescription("Registra um novo usuário no sistema com as informações fornecidas.")]
     public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
     {
         try
@@ -24,6 +27,8 @@ public class UserController(IUserService userService) : ControllerBase
     }
 
     [HttpPost("login")]
+    [EndpointSummary("Autentica um usuário")]
+    [EndpointDescription("Autentica um usuário e retorna um token de acesso.")]
     public async Task<IActionResult> Login(LoginUserDto loginUserDto)
     {
         try
@@ -38,6 +43,8 @@ public class UserController(IUserService userService) : ControllerBase
     }
 
     [HttpPut("profile/{id}")]
+    [EndpointSummary("Atualiza o perfil de um usuário")]
+    [EndpointDescription("Atualiza as informações de perfil de um usuário existente.")]
     public async Task<IActionResult> UpdateProfile(int id, UpdateUserProfileDto updateUserProfileDto)
     {
         try
@@ -60,6 +67,8 @@ public class UserController(IUserService userService) : ControllerBase
     // }
 
     [HttpGet("{id}")]
+    [EndpointSummary("Obtém um usuário pelo ID")]
+    [EndpointDescription("Obtém os detalhes de um usuário específico pelo seu ID.")]
     public async Task<IActionResult> GetUser(int id)
     {
         try

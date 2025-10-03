@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using UniBlog.Application.DTO;
 using UniBlog.Application.Interfaces;
 
@@ -9,6 +10,8 @@ namespace UniBlog.WebApi.Controllers;
 public class CommentController(ICommentService commentService) : ControllerBase
 {
     [HttpPost]
+    [EndpointSummary("Cria um novo comentário")]
+    [EndpointDescription("Cria um novo comentário em uma publicação.")]
     public async Task<IActionResult> Create([FromBody] CommentCreateDto comment)
     {
         try
@@ -23,6 +26,8 @@ public class CommentController(ICommentService commentService) : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [EndpointSummary("Exclui um comentário")]
+    [EndpointDescription("Exclui um comentário do sistema a partir do seu ID.")]
     public async Task<IActionResult> Delete(int id)
     {
         try
