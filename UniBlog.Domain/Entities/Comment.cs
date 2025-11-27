@@ -1,6 +1,6 @@
 namespace UniBlog.Domain.Entities;
 
-public class Comment: Entity
+public class Comment : Entity
 {
     public int PostId { get; set; }
     public Post? Post { get; set; }

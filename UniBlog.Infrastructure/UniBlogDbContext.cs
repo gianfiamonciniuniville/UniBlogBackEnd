@@ -3,14 +3,14 @@ using UniBlog.Domain.Entities;
 
 namespace UniBlog.Infrastructure;
 
-public class UniBlogDbContext: DbContext
+public class UniBlogDbContext : DbContext
 {
-        public DbSet<Post> Posts { get; set; }
+    public DbSet<Post> Posts { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Like> Likes { get; set; }
-    
+
     public UniBlogDbContext()
     {
     }

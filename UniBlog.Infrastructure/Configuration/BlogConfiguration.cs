@@ -4,7 +4,7 @@ using UniBlog.Domain.Entities;
 
 namespace UniBlog.Infrastructure.Configuration;
 
-public class BlogConfiguration(): IEntityTypeConfiguration<Blog>
+public class BlogConfiguration() : IEntityTypeConfiguration<Blog>
 {
     public void Configure(EntityTypeBuilder<Blog> builder)
     {

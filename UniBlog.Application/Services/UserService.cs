@@ -34,7 +34,7 @@ public class UserService : IUserService
         };
 
         await _userRepository.CreateAsync(user);
-        
+
         // TODO: Generate JWT token
         var token = "fake_token";
 

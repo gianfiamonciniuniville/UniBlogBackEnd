@@ -27,7 +27,7 @@ public class UserRepository(UniBlogDbContext context) : IUserRepository
     }
 
     public async Task<User?> GetByUserNameAsync(string userName)
-    { 
+    {
         return await _context.Users.FirstOrDefaultAsync(u => u.UserName == userName);
     }
 

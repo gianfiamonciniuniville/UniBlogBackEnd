@@ -1,6 +1,6 @@
 namespace UniBlog.Domain.Entities;
 
-public sealed class Post: Entity
+public sealed class Post : Entity
 {
     public int BlogId { get; set; }
     public Blog? Blog { get; set; }

@@ -5,7 +5,7 @@ using UniBlog.Domain.Entities;
 
 namespace UniBlog.Infrastructure.Configuration;
 
-public class UserConfiguration(): IEntityTypeConfiguration<User>
+public class UserConfiguration() : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
@@ -19,7 +19,7 @@ public class UserConfiguration(): IEntityTypeConfiguration<User>
         builder.Property(p => p.ProfileImageUrl);
         builder.Property(p => p.Role).HasDefaultValue(nameof(Role.Autor));
         builder.HasMany(p => p.Blogs).WithOne(b => b.User).HasForeignKey(b => b.UserId);
-        
+
         builder.HasData([
             new User() { Id = 1, UserName = "teste", Email = "user1@user.com", Bio = "Test bio user 1", PasswordHash = "Teste123", ProfileImageUrl = "", Role = nameof(Role.Autor) }
         ]);

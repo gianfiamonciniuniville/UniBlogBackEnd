@@ -1,6 +1,6 @@
 ﻿namespace UniBlog.Domain.Entities;
 
-public class Blog: Entity
+public class Blog : Entity
 {
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;

@@ -2,7 +2,7 @@ using UniBlog.Domain.Entities;
 
 namespace UniBlog.Domain.Interfaces;
 
-public interface IPostRepository: IRepository<Post>
+public interface IPostRepository : IRepository<Post>
 {
     Task<IEnumerable<Post>> GetAllWithDetailsAsync();
     Task<Post?> GetByIdAsync(int id);

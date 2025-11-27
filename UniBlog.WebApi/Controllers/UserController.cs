@@ -21,9 +21,10 @@ public class UserController(IUserService userService) : ControllerBase
             var authResponse = await _userService.RegisterUserAsync(registerUserDto);
             return Ok(authResponse);
         }
-        catch(Exception ex){
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
-        }   
+        }
     }
 
     [HttpPost("login")]
@@ -36,7 +37,7 @@ public class UserController(IUserService userService) : ControllerBase
             var authResponse = await _userService.LoginUserAsync(loginUserDto);
             return Ok(authResponse);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
@@ -51,7 +52,9 @@ public class UserController(IUserService userService) : ControllerBase
         {
             var user = await _userService.UpdateUserProfileAsync(id, updateUserProfileDto);
             return Ok(user);
-        }catch(Exception ex){
+        }
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }
@@ -80,7 +83,8 @@ public class UserController(IUserService userService) : ControllerBase
             }
             return Ok(user);
         }
-        catch(Exception ex){
+        catch (Exception ex)
+        {
             return BadRequest(ex.Message);
         }
     }

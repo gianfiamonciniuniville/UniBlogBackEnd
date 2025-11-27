@@ -4,7 +4,7 @@ using UniBlog.Domain.Entities;
 
 namespace UniBlog.Infrastructure.Configuration;
 
-public class LikeConfiguration: IEntityTypeConfiguration<Like>
+public class LikeConfiguration : IEntityTypeConfiguration<Like>
 {
     public void Configure(EntityTypeBuilder<Like> builder)
     {
