@@ -10,4 +10,5 @@ public interface IPostRepository : IRepository<Post>
     Task<IEnumerable<Post>> GetByAuthorWithDetailsAsync(int authorId);
     Task<Post> UpdateAsync(Post post);
     Task<Post> CreateAsync(Post post);
+    Task<Post> DeleteAsync(Post post);
 }

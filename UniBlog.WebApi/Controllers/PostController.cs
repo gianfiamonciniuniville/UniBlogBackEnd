@@ -117,4 +117,24 @@ public class PostController(IPostService postService) : ControllerBase
             return StatusCode(500, ex.Message);
         }
     }
+    
+    [HttpDelete("{id}")]
+    [EndpointSummary("Exclui uma publicação")]
+    [EndpointDescription("Exclui uma publicação existente a partir do seu ID.")]
+    public async Task<IActionResult> DeletePost(int id)
+    {
+        try
+        {
+            var deletedPost = await postService.DeletePost(id);
+            if (deletedPost == null)
+            {
+                return NotFound();
+            }
+            return Ok(deletedPost);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
 }

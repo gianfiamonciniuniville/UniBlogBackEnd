@@ -117,4 +117,13 @@ public class PostService(IPostRepository postRepository) : IPostService
             Likes = p.Likes?.Select(l => new LikeDto { Id = l.Id, User = l.User != null ? new UserShortDto { Id = l.User.Id, UserName = l.User.UserName, ProfileImageUrl = l.User.ProfileImageUrl } : null }) ?? new List<LikeDto>()
         });
     }
+    
+    public async Task<PostDto?> DeletePost(int id)
+    {
+        var existingPost = await postRepository.GetByIdAsync(id)
+            ?? throw new Exception("Post not found");
+
+        var deletedPost = await postRepository.DeleteAsync(existingPost);
+        return await GetBySlug(deletedPost.Slug) ?? throw new Exception("Post not found after delete.");
+    }
 }

@@ -68,4 +68,11 @@ public class PostRepository(UniBlogDbContext context) : Repository<Post>(context
         await context.SaveChangesAsync();
         return entry.Entity;
     }
+    
+    public async Task<Post> DeleteAsync(Post post)
+    {
+        var entry = context.Posts.Remove(post);
+        await context.SaveChangesAsync();
+        return entry.Entity;
+    }
 }

@@ -10,4 +10,5 @@ public interface IPostService
     Task<PostDto> PublishPost(int id);
     Task<PostDto?> GetBySlug(string slug);
     Task<IEnumerable<PostDto>> GetByAuthor(int authorId);
+    Task<PostDto?> DeletePost(int id);
 }
