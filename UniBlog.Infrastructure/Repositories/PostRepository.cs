@@ -9,6 +9,7 @@ public class PostRepository(UniBlogDbContext context) : Repository<Post>(context
     public async Task<IEnumerable<Post>> GetAllWithDetailsAsync()
     {
         return await context.Posts
+            .Include(p => p.Blog)
             .Include(p => p.Author)
             .Include(p => p.Comments)
             .ThenInclude(c => c.User)
@@ -19,12 +20,20 @@ public class PostRepository(UniBlogDbContext context) : Repository<Post>(context
 
     public async Task<Post?> GetByIdAsync(int id)
     {
-        return await context.Posts.FindAsync(id);
+        return await context.Posts
+            .Include(p => p.Blog)
+            .Include(p => p.Author)
+            .Include(p => p.Comments)
+            .ThenInclude(c => c.User)
+            .Include(p => p.Likes)
+            .ThenInclude(l => l.User)
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<Post?> GetBySlugWithDetailsAsync(string slug)
     {
         return await context.Posts
+            .Include(p => p.Blog)
             .Include(p => p.Author)
             .Include(p => p.Comments)
             .ThenInclude(c => c.User)

@@ -1,6 +1,3 @@
-
-using UniBlog.Domain.Entities;
-
 namespace UniBlog.Application.DTO;
 
 public class PostDto
@@ -10,6 +7,7 @@ public class PostDto
     public string Content { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
     public int BlogId { get; set; }
+    public BlogShortDto Blog { get; set; } = new BlogShortDto();
     public bool Published { get; set; }
     public DateTime? PublishedAt { get; set; }
     public int ViewCount { get; set; }

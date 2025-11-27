@@ -16,7 +16,11 @@ public class PostService(IPostRepository postRepository) : IPostService
             Title = p.Title,
             Content = p.Content,
             Slug = p.Slug,
-            BlogId = p.BlogId,
+            Blog = new BlogShortDto()
+            {
+                Id = p.Blog.Id,
+                Title = p.Blog.Title
+            },
             Published = p.Published,
             PublishedAt = p.PublishedAt,
             ViewCount = p.ViewCount,
@@ -77,7 +81,11 @@ public class PostService(IPostRepository postRepository) : IPostService
             Title = p.Title,
             Content = p.Content,
             Slug = p.Slug,
-            BlogId = p.BlogId,
+            Blog = new BlogShortDto()
+            {
+                Id = p.Blog.Id,
+                Title = p.Blog.Title
+            },
             Published = p.Published,
             PublishedAt = p.PublishedAt,
             ViewCount = p.ViewCount,
@@ -96,7 +104,11 @@ public class PostService(IPostRepository postRepository) : IPostService
             Title = p.Title,
             Content = p.Content,
             Slug = p.Slug,
-            BlogId = p.BlogId,
+            Blog = new BlogShortDto()
+            {
+                Id = p.Blog.Id,
+                Title = p.Blog.Title
+            },
             Published = p.Published,
             PublishedAt = p.PublishedAt,
             ViewCount = p.ViewCount,
