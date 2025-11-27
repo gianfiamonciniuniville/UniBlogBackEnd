@@ -5,6 +5,7 @@ namespace UniBlog.Application.Interfaces;
 public interface IBlogService
 {
     Task<IEnumerable<BlogDto>> GetAll();
+    Task<IEnumerable<BlogDto>> GetAllBlogsByAuthor(int authorId);
     Task<BlogDto?> GetById(int id);
     Task<BlogDto> Create(BlogCreateDto blog);
     Task<BlogDto> Update(int id, BlogUpdateDto blog);

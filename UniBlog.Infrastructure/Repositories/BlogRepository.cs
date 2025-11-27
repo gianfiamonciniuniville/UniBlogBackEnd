@@ -15,6 +15,15 @@ public class BlogRepository(UniBlogDbContext context) : Repository<Blog>(context
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<Blog>> GetAllWithDetailsByAuthorAsync(int authorId)
+    {
+        return await context.Blogs
+            .Include(b => b.User)
+            .Include(b => b.Posts)
+            .Where(b => b.UserId == authorId)
+            .ToListAsync();
+    }
+
     public async Task<Blog?> GetByIdWithDetailsAsync(int id)
     {
         return await context.Blogs

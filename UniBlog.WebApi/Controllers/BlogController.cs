@@ -25,6 +25,22 @@ public class BlogController(IBlogService blogService) : ControllerBase
         }
     }
 
+    [HttpGet("author/{authorId}")]
+    [EndpointSummary("Obtém todos os blogs")]
+    [EndpointDescription("Obtém a lista de todos os blogs cadastrados no sistema.")]
+    public async Task<IActionResult> GetAll(int authorId)
+    {
+        try
+        {
+            var blogs = await blogService.GetAllBlogsByAuthor(authorId);
+            return Ok(blogs);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
+
     [HttpGet("{id}")]
     [EndpointSummary("Obtém um blog pelo ID")]
     [EndpointDescription("Obtém os detalhes de um blog específico pelo seu ID.")]
