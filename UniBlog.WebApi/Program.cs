@@ -8,6 +8,18 @@ using UniBlog.WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(MyAllowSpecificOrigins, policy =>
+    {
+        policy.AllowAnyOrigin();
+        policy.AllowAnyMethod();
+        policy.AllowAnyHeader();
+    });
+});
+
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -43,11 +55,8 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
+app.UseCors(MyAllowSpecificOrigins);
 app.Run();
