@@ -21,7 +21,8 @@ public class UserConfiguration() : IEntityTypeConfiguration<User>
         builder.HasMany(p => p.Blogs).WithOne(b => b.User).HasForeignKey(b => b.UserId);
 
         builder.HasData([
-            new User() { Id = 1, UserName = "teste", Email = "user1@user.com", Bio = "Test bio user 1", PasswordHash = "Teste123", ProfileImageUrl = "", Role = nameof(Role.Autor) }
+            new User() { Id = 1, UserName = "testuser1", Email = "user1@user.com", Bio = "Test bio user 1", PasswordHash = "Teste123", ProfileImageUrl = "", Role = nameof(Role.Autor) },
+            new User() { Id = 2, UserName = "testuser2", Email = "user2@user.com", Bio = "Test bio user 2", PasswordHash = "Teste123", ProfileImageUrl = "", Role = nameof(Role.Autor) }
         ]);
     }
 }

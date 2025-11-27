@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UniBlog.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateDbSet : Migration
+    public partial class ReseedData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -71,6 +71,18 @@ namespace UniBlog.Infrastructure.Migrations
                 columns: new[] { "AuthorId", "Published", "PublishedAt", "Slug" },
                 values: new object[] { 1, true, null, "the-magic-of-cooking" });
 
+            migrationBuilder.UpdateData(
+                table: "User",
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "UserName",
+                value: "testuser1");
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "Id", "Bio", "Created", "Email", "PasswordHash", "ProfileImageUrl", "Role", "Updated", "UserName" },
+                values: new object[] { 2, "Test bio user 2", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "user2@user.com", "Teste123", "", "Autor", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "testuser2" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Post_AuthorId",
                 table: "Post",
@@ -95,6 +107,11 @@ namespace UniBlog.Infrastructure.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_Post_AuthorId",
                 table: "Post");
+
+            migrationBuilder.DeleteData(
+                table: "User",
+                keyColumn: "Id",
+                keyValue: 2);
 
             migrationBuilder.DropColumn(
                 name: "AuthorId",
@@ -147,6 +164,13 @@ namespace UniBlog.Infrastructure.Migrations
                 keyValue: 5,
                 column: "Status",
                 value: "Publicado");
+
+            migrationBuilder.UpdateData(
+                table: "User",
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "UserName",
+                value: "teste");
         }
     }
 }

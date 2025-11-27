@@ -306,7 +306,19 @@ namespace UniBlog.Infrastructure.Migrations
                             ProfileImageUrl = "",
                             Role = "Autor",
                             Updated = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            UserName = "teste"
+                            UserName = "testuser1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Bio = "Test bio user 2",
+                            Created = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Email = "user2@user.com",
+                            PasswordHash = "Teste123",
+                            ProfileImageUrl = "",
+                            Role = "Autor",
+                            Updated = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            UserName = "testuser2"
                         });
                 });
 
