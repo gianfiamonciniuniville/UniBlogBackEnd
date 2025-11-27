@@ -9,6 +9,7 @@ public class PostDto
     public string Title { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
+    public int BlogId { get; set; }
     public bool Published { get; set; }
     public DateTime? PublishedAt { get; set; }
     public int ViewCount { get; set; }
